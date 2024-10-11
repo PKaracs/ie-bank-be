@@ -8,20 +8,15 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///local-database.db"
 
 # Select environment based on the ENV environment variable
-if os.getenv('ENV') == 'local':
+if os.getenv("ENV") == "local":
     print("Running in local mode")
-    app.config.from_object('config.LocalConfig')
-elif os.getenv('ENV') == 'dev':
+    app.config.from_object("config.LocalConfig")
+elif os.getenv("ENV") == "dev":
     print("Running in development mode")
-    app.config.from_object('config.DevelopmentConfig')
-elif os.getenv('ENV') == 'ghci':
+    app.config.from_object("config.DevelopmentConfig")
+elif os.getenv("ENV") == "ghci":
     print("Running in github mode")
-    app.config.from_object('config.GithubCIConfig')
-
-
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "sqlite:///local-database.db" 
-)
+    app.config.from_object("config.GithubCIConfig")
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
