@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 env:
-  BACKEND_WEBAPP_DEV: aguadamillas-be-dev
+  BACKEND_WEBAPP_DEV: pkaracs-be-dev
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        python -m pytest --cov=iebank_api -v
+        python -m pytest -v
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
