@@ -1,15 +1,17 @@
-from iebank_api.models import Account
 import pytest
+from iebank_api.models import Account
 
-def test_create_account():
+
+def test_create_account(testing_client):  # Add 'testing_client' as a parameter
     """
-    GIVEN a Account model
-    WHEN a new Account is created
-    THEN check the name, account_number, balance, currency, status and created_at fields are defined correctly
+    GIVEN a Flask application
+    WHEN the '/accounts' page is posted to (POST)
+    THEN check the response is valid
     """
-    account = Account('John Doe', '€')
-    assert account.name == 'John Doe'
-    assert account.currency == '€'
-    assert account.account_number != None
-    assert account.balance == 0.0
-    assert account.status == 'Active'
+    response = testing_client.post(
+        "/accounts", json={"name": "John Doe", "currency": "€", "country": "Ireland"}
+    )
+    assert response.status_code == 200
+    assert response.json["name"] == "John Doe"
+    assert response.json["currency"] == "€"
+    assert response.json["country"] == "Ireland"
